@@ -16,6 +16,7 @@
 .settings/
 .vscode/
 *.iml
+out/
 
 # OS junk
 .DS_Store
