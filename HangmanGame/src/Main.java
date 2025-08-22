@@ -1,13 +1,37 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main
 {
     public static void main(String[] args)
     {
+
+        String filePath = "words.txt";
+        ArrayList<String> wordList = new ArrayList<>();
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath)))
+        {
+            String line;
+            while((line = reader.readLine()) != null)
+            {
+                wordList.add(line.trim());
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println("Something went wrong");
+        }
+
+        Random random = new Random();
+        String word = wordList.get(random.nextInt(wordList.size())).toLowerCase();
+
+
         Scanner scanner = new Scanner(System.in);
         ArrayList<Character> gameWord = new ArrayList<>();
-        String word = "lahmacun";
         boolean isRunning = true;
         int guessWrongCount = 0;
         for(int i = 0; i<word.length(); i++)
@@ -26,12 +50,14 @@ public class Main
                 System.out.print(letter + " ");
             }
             System.out.println();
+            System.out.println("Total attempt count is -> " + (6-guessWrongCount));
             System.out.print("Enter letter to guess word: ");
             char guess = scanner.next().toLowerCase().charAt(0);
 
             if (word.indexOf(guess) >= 0)
             {
                System.out.println("Correct guess");
+
 
                for(int j = 0; j < word.length(); j++)
                {
@@ -61,6 +87,7 @@ public class Main
             }
         }
         scanner.close();
+
     }
     static String drawHangman(int hangmantype)
     {
